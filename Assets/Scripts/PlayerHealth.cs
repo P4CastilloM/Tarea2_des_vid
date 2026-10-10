@@ -7,6 +7,10 @@ public class PlayerHealth : MonoBehaviour
     public float vidaActual = 100f;
 
     public Slider barraVida;
+    [Header("Efecto Curacion")]
+    public ParticleSystem efectoCuracion;
+    public AudioClip sonidoCuracion;
+
 
     void Start()
     {
@@ -32,7 +36,10 @@ public class PlayerHealth : MonoBehaviour
 
         if (vidaActual > vidaMaxima)
             vidaActual = vidaMaxima;
-
+        if (efectoCuracion != null)
+            efectoCuracion.Play();
+        if (sonidoCuracion != null)
+            AudioSource.PlayClipAtPoint(sonidoCuracion, transform.position);
         barraVida.value = vidaActual;
     }
 }
