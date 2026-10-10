@@ -9,8 +9,10 @@ public class PlayerHealth : MonoBehaviour
     public Slider barraVida;
     [Header("Efecto Curacion")]
     public ParticleSystem efectoCuracion;
-    public AudioClip sonidoCuracion;
-
+    public AudioClip sonidoCuracion;    
+    [Header("Efecto Danio")]
+    public ParticleSystem efectoDanio;
+    public AudioClip sonidoDanio;
 
     void Start()
     {
@@ -28,6 +30,11 @@ public class PlayerHealth : MonoBehaviour
             vidaActual = 0;
 
         barraVida.value = vidaActual;
+
+        if(efectoDanio != null)
+            efectoDanio.Play();
+        if(sonidoDanio != null)
+            AudioSource.PlayClipAtPoint(sonidoDanio, transform.position);
     }
 
     public void Curar(float cantidad)
@@ -36,9 +43,9 @@ public class PlayerHealth : MonoBehaviour
 
         if (vidaActual > vidaMaxima)
             vidaActual = vidaMaxima;
-        if (efectoCuracion != null)
+        if (efectoCuracion != null && vidaActual < vidaMaxima)
             efectoCuracion.Play();
-        if (sonidoCuracion != null)
+        if (sonidoCuracion != null && vidaActual < vidaMaxima)
             AudioSource.PlayClipAtPoint(sonidoCuracion, transform.position);
         barraVida.value = vidaActual;
     }
